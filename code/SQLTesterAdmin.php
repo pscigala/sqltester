@@ -1,36 +1,16 @@
 <?php
 
-//class SQLTester extends Page {
-//    
-//}
-
 class SQLTesterAdmin extends LeftAndMain {
 
-//    private static $managed_models = array('SQL Tester', 'SQL Tester'); // Can manage multiple models
-    private static $url_segment = 'sql-tester'; // Linked as /admin/products/
+    private static $url_segment = 'sql-tester';
     private static $menu_title = 'SQL Tester';
-    private static $allowed_actions = array('TestStatement', 'submit', 'SQLTesterInputForm','getTablesJSON');
+    private static $allowed_actions = array('TestStatement', 'submit', 'SQLTesterInputForm', 'getTablesJSON',
+        'getTableColumns');
 
     public function EditForm($request = null) {
         return null;
     }
 
-    public function EditorToolbar() {
-        return 'asd';
-    }
-
-//    public function EditFormTools() {
-//        return null;
-//    }
-//    public function ImportForm() {
-//        return false;
-//    }
-//    public function init() {
-//        parent::init();
-//    }
-//
-//    private static $allowed_actions = array('TestStatement', 'submit', 'SQLTesterInputForm');
-//
     public function init() {
         parent::init();
         Requirements::css(project() . "/templates/javascript/codemirror/addon/hint/show-hint.css");
@@ -95,35 +75,39 @@ class SQLTesterAdmin extends LeftAndMain {
 
     public function getTablesJSON() {
         $tables = DB::tableList();
-        $tablesStructure =array('data'=>array());
+        $tablesStructure = array('data' => array());
         $tabObj = array();
         $id = 0;
         foreach ($tables as $table) {
-//            $tabObj['id'] = 'tab' . $id;
-            $tabObj['id'] = '5';
-            $tabObj['parent'] = '#';
-//            $tabObj['text'] = $table;
+
+            //fields as childrens
+            $tabObj['id'] = $id;
             $tabObj['title'] = $table;
-            $tabObj['position'] = $id;
+            $tabObj['children'] = array('test', 'test2');
 
             $id++;
-            
+
             array_push($tablesStructure['data'], $tabObj);
         }
         return Convert::array2json($tablesStructure);
     }
 
-//    
-//    public function Content() {
-////        return 'sad';
-//        $this->renderWith('SQLTester');
-//        return parent::Content();
-//    }
-//
-//    public function Tools() {
-//        return parent::Tools();
-//    }
-//
+    public function getTableColumns($table) {
+        $columns = DB::fieldList('Car');
+        $data = array();
+        $c = array();
+        $i = 0;
+
+        $keys = array_keys($columns);
+        foreach ($keys as $k) {
+            $c['title'] = $k;
+            $i++;
+            array_push($data, $c);
+        }
+
+        return $data;
+    }
+
 }
 
 ?>

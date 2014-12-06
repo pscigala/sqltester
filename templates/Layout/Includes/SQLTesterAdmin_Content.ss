@@ -69,7 +69,6 @@
             indentWithTabs: true,
             lineWrapping: true,
             smartIndent: true,
-//        lineNumbers: true,
             lineNumbers: true,
             tabMode: 'indent',
             styleActiveLine: true,
@@ -95,13 +94,11 @@
                 },
                 success: function (response) {
                     z = response;
-//                    return response;
                 }});
 
-            console.log(z);
             jQuery('#sql-tester-dialog').dialog({width: 800, resizable: true, height: 600});
             jQuery('.sql-tester-tables-tree').jstree({"plugins": [
-                    "themes", "json_data"
+                    "themes", "json_data", "ui"
                 ],
                 "json_data"
                         : {"data": z}}

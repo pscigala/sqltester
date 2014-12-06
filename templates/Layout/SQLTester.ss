@@ -54,7 +54,6 @@
         indentWithTabs: true,
         lineWrapping: true,
         smartIndent: true,
-//        lineNumbers: true,
         lineNumbers: true,
         tabMode: 'indent',
         styleActiveLine: true,
